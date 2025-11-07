@@ -1,0 +1,78 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit 5 for testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.1'
+
+    // Google Guava (if needed)
+    implementation 'com.google.guava:guava:32.1.2-jre'
+
+    // JavaFX dependencies for Windows (change :win if Linux/Mac)
+    implementation "org.openjfx:javafx-base:25.0.1:win"
+    implementation "org.openjfx:javafx-controls:25.0.1:win"
+    implementation "org.openjfx:javafx-graphics:25.0.1:win"
+    implementation "org.openjfx:javafx-fxml:25.0.1:win"
+
+    // Local 3D visualization library
+    implementation files('../libs/fxyz3d-0.6.0.jar')
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+application {
+    // Default entry point
+    mainClass = 'com.simulator.ConstellationSimulatorTest'
+    applicationDefaultJvmArgs = [
+        '--enable-native-access=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+    ]
+}
+
+// Common JavaFX args
+def javafxArgs = [
+    '--module-path', configurations.runtimeClasspath.asPath,
+    '--add-modules', 'javafx.controls,javafx.fxml,javafx.graphics',
+    '--enable-native-access=ALL-UNNAMED',
+    '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+]
+
+// Default run task
+tasks.named('run', JavaExec) {
+    jvmArgs = javafxArgs
+}
+
+// ---- Custom Run Tasks ----
+
+// Run ConstellationSimulatorTest
+tasks.register('runConstellationTest', JavaExec) {
+    group = 'application'
+    description = 'Run ConstellationSimulatorTest'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('com.simulator.ConstellationSimulatorTest')
+    jvmArgs = javafxArgs
+}
+
+// Run OrbitalConstellationTest
+tasks.register('runOrbitalConstellationTest', JavaExec) {
+    group = 'application'
+    description = 'Run OrbitalConstellationTest'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('com.simulator.OrbitalConstellationTest')
+    jvmArgs = javafxArgs
+}
+
+// Tests using JUnit 5
+tasks.named('test') {
+    useJUnitPlatform()
+}
