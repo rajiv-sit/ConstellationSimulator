@@ -52,6 +52,43 @@ Include fxyz3d-0.6.0.jar in dependencies to enable 3D visualization.
 
 For Gradle manual setup, confirm %GRADLE_HOME%\bin is in Path.
 
+## Running Tests
+
+You can run the Constellation Simulator tests using the provided batch file `build-and-run-constellation-simulator-test.bat`. This batch file will build the project using Gradle, run the selected test, and log the output to `run_output.log`.
+
+### Steps to Run
+
+1. Open **Command Prompt** in the project folder.
+2. Execute the batch file:  
+```cmd
+build-and-run-constellation-simulator-test.bat
+```
+
+3. You will be prompted to select which test to run:
+   Select which test to run:
+  [1] ConstellationSimulatorTest
+  [2] OrbitalConstellationTest
+Enter your choice (1 or 2):
+1: ConstellationSimulatorTest – runs a simulation using the main Constellation Simulator scenario.
+
+2: OrbitalConstellationTest – runs orbital constellation scenarios for testing specific orbital configurations.
+
+4. The batch file will first clean and build the project using Gradle. Build output is logged to run_output.log.
+
+5. After building, it will launch the selected test, appending all output to run_output.log.
+
+6. Once the test completes, you can open run_output.log to review the simulation output or debug information.
+
+Notes
+
+Ensure Java 21 and Gradle are installed and configured correctly in your system PATH.
+
+The batch file detects the OS automatically and supports Windows or Unix-like environments (with minor adjustments for Unix shells).
+
+If the build fails, check run_output.log for detailed error messages.
+
+You can re-run the batch file any time to run a different test scenario.
+
 Output:
 
 <img width="1904" height="1007" alt="image" src="https://github.com/user-attachments/assets/ecbafd06-1f73-4ff7-8838-9a7fd0a62371" />
